@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Congratulations!</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="container congrats-container">
+        <header>
+            <h1>Congratulations!</h1>
+            <p>You solved the {{ level_name }} puzzle!</p>
+        </header>
+        
+        <div class="stats">
+            <div class="stat">
+                <span class="stat-value">{{ "%02d:%02d"|format(time_taken//60, time_taken%60) }}</span>
+                <span class="stat-label">Time</span>
+            </div>
+            
+            <div class="stat">
+                <span class="stat-value">{{ hints_used }}</span>
+                <span class="stat-label">Hints Used</span>
+            </div>
+        </div>
+        
+        <div class="actions">
+            <a href="/game/{{ session['level'] }}" class="btn">Play Again</a>
+            <a href="/" class="btn">New Game</a>
+        </div>
+        <footer class="credits-footer">
+            <p>Developed by team:</p>
+            <p>- Mohamed Ahmed Abd El-Ghany</p>
+            <p>- Mohamed Adel Mohamed</p>
+            <p>- Mohamed Hassan Mohamed</p>
+        </footer>
+    </div>
+</body>
+</html>

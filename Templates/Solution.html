@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Solution</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sudoku Solution</h1>
+            <p class="subtitle">Complete Solution</p>
+        </header>
+        
+        <table class="sudoku-grid solution-grid">
+            {% for i in range(9) %}
+            <tr class="{% if i in [2,5] %}thick-bottom{% endif %}">
+                {% for j in range(9) %}
+                <td class="{% if j in [2,5] %}thick-right{% endif %}">
+                    <div class="{% if session['puzzle'][i][j] == 0 %}user-filled{% else %}fixed-cell{% endif %}">
+                        {{ board[i][j] }}
+                    </div>
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+        
+        <div class="game-controls">
+            <a href="/game/{{ session['level'] }}" class="btn">Play Again</a>
+            <a href="/" class="btn new-game-btn">New Game</a>
+        </div>
+        <footer class="credits-footer">
+            <p>Developed by team:</p>
+            <p>- Mohamed Ahmed Abd El-Ghany</p>
+            <p>- Mohamed Adel Mohamed</p>
+            <p>- Mohamed Hassan Mohamed</p>
+        </footer>
+    </div>
+</body>
+</html>

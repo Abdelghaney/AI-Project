@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sudoku - {{ level_name }}</title>
     <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="/static/js/game.js" defer></script>
 </head>
 <body>
@@ -14,6 +15,14 @@
             <div class="game-info">
                 <span class="level-badge">{{ level_name }}</span>
                 <span class="timer">00:00</span>
+                <span class="hint-counter">
+                    <i class="fas fa-lightbulb"></i> 
+                    <span id="hint-count">0</span>
+                </span>
+                <span class="mistake-counter">
+                    <i class="fas fa-times-circle"></i> 
+                    <span id="mistake-count">0</span>
+                </span>
             </div>
         </header>
         
@@ -21,19 +30,21 @@
         <div class="message error">{{ message }}</div>
         {% endif %}
         
-        <form method="post" action="/check" class="sudoku-form" onsubmit="return validateForm()">
+        <form method="post" action="/check" class="sudoku-form">
             <table class="sudoku-grid">
                 {% for i in range(9) %}
                 <tr class="{% if i in [2,5] %}thick-bottom{% endif %}">
                     {% for j in range(9) %}
-                    <td class="{% if j in [2,5] %}thick-right{% endif %}">
-                        {% if board[i][j] != 0 %}
+                    <td class="{% if j in [2,5] %}thick-right{% endif %}
+                               {% if errors %}{% for e in errors %}{% if e.row == i and e.col == j %}error-cell{% endif %}{% endfor %}{% endif %}">
+                        {% if puzzle[i][j] != 0 %}
                         <div class="fixed-cell">{{ board[i][j] }}</div>
                         {% else %}
                         <input type="number" name="cell_{{i}}_{{j}}" 
                                min="1" max="9" 
                                class="editable-cell"
-                               data-row="{{i}}" data-col="{{j}}">
+                               data-row="{{i}}" data-col="{{j}}"
+                               value="{% if board[i][j] != 0 %}{{ board[i][j] }}{% endif %}">
                         {% endif %}
                     </td>
                     {% endfor %}
@@ -42,19 +53,30 @@
             </table>
             
             <div class="game-controls">
-                <button type="button" class="btn hint-btn">Get Hint</button>
-                <button type="submit" class="btn check-btn">Check Solution</button>
-                <button type="button" class="btn visualize-btn">Visualize Solution</button>
-                <button type="button" class="btn solve-btn">Show Solution</button>
-                <a href="/" class="btn new-game-btn">New Game</a>
+                <button type="button" class="btn hint-btn">
+                    <i class="fas fa-lightbulb"></i> Hint
+                </button>
+                <button type="submit" class="btn check-btn">
+                    <i class="fas fa-check"></i> Check
+                </button>
+                <button type="button" class="btn visualize-btn">
+                    <i class="fas fa-eye"></i> Visualize
+                </button>
+                <button type="button" class="btn solve-btn">
+                    <i class="fas fa-brain"></i> Solve
+                </button>
+                <a href="/" class="btn new-game-btn">
+                    <i class="fas fa-redo"></i> New Game
+                </a>
+            </div>
+            
+            <div class="credits-footer">
+                <p>Developed by:</p>
+                <p>Mohamed Adel Mohamed</p>
+                <p>Mohamed Hassan Mohamed</p>
+                <p>Mohamed Ahmed Abd El-Ghany</p>
             </div>
         </form>
-        <footer class="credits-footer">
-            <p>Developed by team:</p>
-            <p>- Mohamed Ahmed Abd El-Ghany</p>
-            <p>- Mohamed Adel Mohamed</p>
-            <p>- Mohamed Hassan Mohamed</p>
-        </footer>
     </div>
 </body>
 </html>

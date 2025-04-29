@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Congratulations!</title>
     <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container congrats-container">
@@ -20,21 +21,53 @@
             </div>
             
             <div class="stat">
+                <span class="stat-value">{{ score }}</span>
+                <span class="stat-label">Score</span>
+            </div>
+            
+            <div class="stat">
                 <span class="stat-value">{{ hints_used }}</span>
                 <span class="stat-label">Hints Used</span>
             </div>
+            
+            <div class="stat">
+                <span class="stat-value">{{ mistakes }}</span>
+                <span class="stat-label">Mistakes</span>
+            </div>
         </div>
         
-        <div class="actions">
-            <a href="/game/{{ session['level'] }}" class="btn">Play Again</a>
-            <a href="/" class="btn">New Game</a>
+        {% if score >= 800 %}
+        <div class="achievement gold">
+            <i class="fas fa-trophy"></i>
+            <span>Gold Medal Performance!</span>
         </div>
-        <footer class="credits-footer">
-            <p>Developed by team:</p>
-            <p>- Mohamed Ahmed Abd El-Ghany</p>
-            <p>- Mohamed Adel Mohamed</p>
-            <p>- Mohamed Hassan Mohamed</p>
-        </footer>
+        {% elif score >= 500 %}
+        <div class="achievement silver">
+            <i class="fas fa-medal"></i>
+            <span>Great Job!</span>
+        </div>
+        {% else %}
+        <div class="achievement bronze">
+            <i class="fas fa-thumbs-up"></i>
+            <span>Well Done!</span>
+        </div>
+        {% endif %}
+        
+        <div class="actions">
+            <a href="/game/{{ session['level'] }}" class="btn">
+                <i class="fas fa-redo"></i> Play Again
+            </a>
+            <a href="/" class="btn">
+                <i class="fas fa-home"></i> Main Menu
+            </a>
+        </div>
+        
+        <div class="credits-footer">
+            <p>Developed by:</p>
+            <p>Mohamed Adel Mohamed</p>
+            <p>Mohamed Hassan Mohamed</p>
+            <p>Mohamed Ahmed Abd El-Ghany</p>
+        </div>
     </div>
 </body>
 </html>
